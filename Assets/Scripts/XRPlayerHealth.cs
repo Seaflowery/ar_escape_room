@@ -1,8 +1,5 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;           // Keyboard
-using UnityEngine.InputSystem.Controls;  // ButtonControl
-using UnityEngine.InputSystem.XR;        
 
 public class XRPlayerHealth : MonoBehaviour
 {

@@ -49,19 +49,12 @@ public class BalloonGhostController : MonoBehaviour
     public Transform explicitCameraTransform;
     public Vector3 cameraOffset = new Vector3(0f, -2.0f, 0f);
 
-    [Header("Camera Tracking")]
-    [Tooltip("How often to re-acquire the player camera (seconds).")]
     public float cameraRefreshInterval = 1.0f;
     private float cameraRefreshTimer = 0f;
 
-    [Header("Line of Sight / Wandering")]
-    [Tooltip("Layers considered as obstacles between ghost and player.")]
     public LayerMask obstructionMask;
-    [Tooltip("How long the ghost wanders when blocked, in seconds.")]
     public float wanderDuration = 2f;
-    [Tooltip("Wander radius around current position.")]
     public float wanderRadius = 1.5f;
-    [Tooltip("Wander movement speed.")]
     public float wanderSpeed = 1f;
 
     private Transform cameraTransform;
@@ -80,8 +73,6 @@ public class BalloonGhostController : MonoBehaviour
 
     // cache renderers for quick hide/show
     private Renderer[] cachedRenderers;
-
-    // ---------- Unity lifecycle ----------
 
     private void Awake()
     {
