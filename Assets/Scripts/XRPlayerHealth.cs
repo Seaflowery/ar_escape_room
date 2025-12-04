@@ -33,6 +33,11 @@ public class XRPlayerHealth : MonoBehaviour
         if (isDead) return;
 
         currentHp -= amount;
+        if (XRHitFeedback.Instance != null)
+        {
+            XRHitFeedback.Instance.OnHit(amount);
+        }
+        
         Debug.Log($"Player damaged. HP = {currentHp}/{maxHp}");
 
         if (currentHp <= 0)
@@ -50,14 +55,7 @@ public class XRPlayerHealth : MonoBehaviour
         if (deathCanvas != null)
             deathCanvas.SetActive(true);
 
-        // 停止 ghost 继续生成/攻击
         BalloonGhostController.globalGhostSpawningEnabled = false;
-
-        // ❌ 不要再 DestroyAllGhosts 了，否则场景里就没有 ghost 脚本可用了
-        // BalloonGhostController.DestroyAllGhosts();
-        //
-        // 现有 ghost 的攻击协程会因为 IsDead / globalGhostSpawningEnabled=false 而退出，
-        // 然后调用自身的 HideGhost() 把自己藏起来。
     }
 
     private void Update()

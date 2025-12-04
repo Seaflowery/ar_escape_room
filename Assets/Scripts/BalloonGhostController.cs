@@ -6,21 +6,9 @@ public class BalloonGhostController : MonoBehaviour
 {
     public static bool globalGhostSpawningEnabled = true;
 
-    // Track all instances so we can destroy/reset them from XRPlayerHealth.
     private static readonly List<BalloonGhostController> allGhosts = new List<BalloonGhostController>();
-
-    public static void DestroyAllGhosts()
-    {
-        var copy = new List<BalloonGhostController>(allGhosts);
-        foreach (var g in copy)
-        {
-            if (g != null)
-            {
-                GameObject.Destroy(g.gameObject);
-            }
-        }
-        allGhosts.Clear();
-    }
+    
+    private Animator animator;
 
     /// <summary>
     /// Reset the internal spawn timers for all ghosts.
@@ -39,43 +27,25 @@ public class BalloonGhostController : MonoBehaviour
                 g.HideGhost();
             }
         }
-        // 注意：不要在这里改 globalGhostSpawningEnabled，由外部（XRPlayerHealth）控制
     }
 
-    // ---------- Instance fields ----------
-
-    [Header("Spawn Settings")]
-    [Tooltip("Time interval between appearances, in seconds.")]
     public float spawnInterval = 5f;
-
-    [Tooltip("How far forward from the camera the ghost should appear.")]
     public float spawnDistance = 3f;
-
-    [Tooltip("Vertical offset above the camera's forward direction.")]
     public float verticalOffset = 1.5f;
 
-    [Tooltip("Horizontal offset left/right from the camera's forward direction (used alternately).")]
     public float horizontalOffset = 1f;
 
-    [Header("Movement")]
-    [Tooltip("Movement speed toward the player.")]
     public float moveSpeed = 1.5f;
 
-    [Tooltip("Distance at which the ghost stops and begins attacking.")]
     public float attackRange = 0.8f;
 
-    [Header("Attack")]
-    [Tooltip("Time interval between attacks, in seconds.")]
     public float attackInterval = 1f;
 
-    [Tooltip("Damage dealt per attack.")]
     public int damagePerHit = 1;
 
     [Tooltip("If true, the ghost keeps attacking repeatedly once in range.")]
     public bool keepAttacking = true;
 
-    [Header("Optional")]
-    [Tooltip("If assigned, this camera will be used instead of Camera.main.")]
     public Transform explicitCameraTransform;
     public Vector3 cameraOffset = new Vector3(0f, -2.0f, 0f);
 
@@ -117,6 +87,16 @@ public class BalloonGhostController : MonoBehaviour
     {
         allGhosts.Add(this);
         cachedRenderers = GetComponentsInChildren<Renderer>(true);
+        animator = GetComponent<Animator>();
+    }
+    
+    private void SetAttacking(bool value)
+    {
+        isAttacking = value;
+        if (animator != null)
+        {
+            animator.SetBool("IsAttacking", value);
+        }
     }
 
     private void OnDestroy()
@@ -304,7 +284,7 @@ public class BalloonGhostController : MonoBehaviour
     private void StartAttack()
     {
         if (isAttacking) return;
-        isAttacking = true;
+        SetAttacking(true);
         StartCoroutine(AttackRoutine());
     }
 
@@ -327,7 +307,7 @@ public class BalloonGhostController : MonoBehaviour
             yield return new WaitForSeconds(attackInterval);
         }
 
-        isAttacking = false;
+        SetAttacking(false);
         HideGhost();
     }
 
@@ -340,7 +320,7 @@ public class BalloonGhostController : MonoBehaviour
 
         // reset states
         isMoving = false;
-        isAttacking = false;
+        SetAttacking(false);
         isWandering = false;
 
         // Optionally disable renderers
