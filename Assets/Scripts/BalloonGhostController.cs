@@ -9,6 +9,8 @@ public class BalloonGhostController : MonoBehaviour
     private static readonly List<BalloonGhostController> allGhosts = new List<BalloonGhostController>();
     
     private Animator animator;
+    private AudioSource audioSource;
+    public AudioClip HitSound;
     
     [Header("Ghost HP")]
     public int maxHp = 3;
@@ -100,6 +102,8 @@ public class BalloonGhostController : MonoBehaviour
         allGhosts.Add(this);
         cachedRenderers = GetComponentsInChildren<Renderer>(true);
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
+        Debug.Log(audioSource);
     }
     
     private void SetAttacking(bool value)
@@ -181,6 +185,11 @@ public class BalloonGhostController : MonoBehaviour
 
         currentHp -= amount;
         Debug.Log($"Ghost hit! HP = {currentHp}/{maxHp}");
+        if (audioSource != null && HitSound != null)
+        {
+            Debug.Log("Play hit sound");
+            audioSource.PlayOneShot(HitSound);
+        }
 
         if (currentHp <= 0)
         {
