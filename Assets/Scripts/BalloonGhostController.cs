@@ -9,6 +9,10 @@ public class BalloonGhostController : MonoBehaviour
     private static readonly List<BalloonGhostController> allGhosts = new List<BalloonGhostController>();
     
     private Animator animator;
+    
+    [Header("Ghost HP")]
+    public int maxHp = 3;
+    private int currentHp;
 
     /// <summary>
     /// Reset the internal spawn timers for all ghosts.
@@ -73,6 +77,23 @@ public class BalloonGhostController : MonoBehaviour
 
     // cache renderers for quick hide/show
     private Renderer[] cachedRenderers;
+    private float hitCooldown = 0.1f;
+    private float lastHitTime = -999f;
+    
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("Damage Ghost with " + other.name);
+        if (!other.CompareTag("Sword"))
+            return;
+        
+        if (Time.time - lastHitTime < hitCooldown)
+            return;
+
+        lastHitTime = Time.time;
+
+        TakeDamage(1);
+    }
+
 
     private void Awake()
     {
@@ -98,6 +119,7 @@ public class BalloonGhostController : MonoBehaviour
     private void Start()
     {
         TryUpdateCameraTransform();
+        currentHp = maxHp;
 
         if (cameraTransform == null)
         {
@@ -151,8 +173,39 @@ public class BalloonGhostController : MonoBehaviour
             MoveTowardsPlayer();
         // }
     }
+    
+    public void TakeDamage(int amount)
+    {
+        if (!globalGhostSpawningEnabled || playerHealth == null || playerHealth.IsDead)
+            return;
 
-    // ---------- Camera helper ----------
+        currentHp -= amount;
+        Debug.Log($"Ghost hit! HP = {currentHp}/{maxHp}");
+
+        if (currentHp <= 0)
+        {
+            OnGhostDead();
+        }
+        else
+        {
+            // TODO: 如果你有“受击动画 / 特效”，可以在这里触发，比如：
+            // animator.SetTrigger("Hit");
+        }
+    }
+
+    private void OnGhostDead()
+    {
+        currentHp = maxHp;
+
+        StopAllCoroutines();
+        isMoving = false;
+        isWandering = false;
+        SetAttacking(false);  
+
+        HideGhost();
+        spawnTimer = spawnInterval; 
+    }
+
 
     private void TryUpdateCameraTransform()
     {
