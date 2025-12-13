@@ -53,10 +53,8 @@ public class QRButtonPuzzleManager : MonoBehaviour
     void PuzzleSolved()
     {
         isSolved = true;
-        Debug.Log("Puzzle Solved! 解密成功，可以触发下一步机关。");
 
-        // TODO: 在这里触发密室的下一环，比如打开门、显示提示等
-        // e.g. EscapeRoomManager.Instance.OnPuzzleSolved();
+        VRSceneManager.Instance.LoadScene("EscapeRoom");
     }
 
     void ResetPuzzle()

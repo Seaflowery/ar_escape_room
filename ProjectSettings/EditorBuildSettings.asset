@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/ShootingGame.unity
     guid: 4a75e7d0d669244c8a1eeb4175154519
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
+    path: Assets/Scenes/EscapeRoom.unity
     guid: 99c9720ab356a0642a771bea13969a05
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: db6c74311ae4240e88cca4c1715db164, type: 2}
