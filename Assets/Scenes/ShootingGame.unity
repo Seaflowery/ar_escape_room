@@ -1470,7 +1470,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dba89f1c3c14224b8fa64363cf2ddf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::trackableAdded
-  qrstring: Target1
+  qrstring: Shaw
 --- !u!114 &1241978025
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1584,7 +1584,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dba89f1c3c14224b8fa64363cf2ddf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::trackableAdded
-  qrstring: Target2
+  qrstring: GitGud
 --- !u!114 &1449666273
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2840,7 +2840,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dba89f1c3c14224b8fa64363cf2ddf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::trackableAdded
-  qrstring: Target
+  qrstring: Galama
 --- !u!1 &8971162721297897013
 GameObject:
   m_ObjectHideFlags: 0
