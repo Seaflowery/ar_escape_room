@@ -1,11 +1,7 @@
 using UnityEngine;
-using UnityEngine.InputSystem;           // Keyboard
 
 public class XRPlayerHealth : MonoBehaviour
 {
-    public InputActionReference primaryButtonAction;
-    public InputActionReference secondaryButtonAction;
-
     [Header("Player HP")]
     public int maxHp = 5;
     public int currentHp;
@@ -59,26 +55,12 @@ public class XRPlayerHealth : MonoBehaviour
     {
         if (!isDead) return;
 
-        if (Keyboard.current.rKey.wasPressedThisFrame)
+        if (OVRInput.GetDown(OVRInput.Button.One, OVRInput.Controller.Active))
         {
-            Debug.Log("R pressed (keyboard)");
+            Debug.Log("Primary pressed (OVRInput)");
             RestartGame();
-            return;
-        }
-        
-        if (primaryButtonAction.action.WasPressedThisFrame())
-        {
-            Debug.Log("Primary pressed (simulator)");
-            RestartGame();
-            return;
         }
 
-        if (secondaryButtonAction.action.WasPressedThisFrame())
-        {
-            Debug.Log("Secondary pressed (simulator)");
-            RestartGame();
-            return;
-        }
     }
        
     public void RestartGame()
@@ -91,10 +73,8 @@ public class XRPlayerHealth : MonoBehaviour
         if (deathCanvas != null)
             deathCanvas.SetActive(false);
 
-        // 重新允许刷 ghost
         BalloonGhostController.globalGhostSpawningEnabled = true;
 
-        // 重置所有 ghost 的内部计时器和状态，让它们重新开始计时再刷出来
         BalloonGhostController.ResetGlobalSpawnClock();
     }
 }

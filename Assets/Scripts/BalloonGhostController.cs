@@ -53,7 +53,7 @@ public class BalloonGhostController : MonoBehaviour
     public bool keepAttacking = true;
 
     public Transform explicitCameraTransform;
-    public Vector3 cameraOffset = new Vector3(0f, -2.0f, 0f);
+    public Vector3 cameraOffset;
 
     public float cameraRefreshInterval = 1.0f;
     private float cameraRefreshTimer = 0f;
