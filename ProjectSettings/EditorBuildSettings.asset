@@ -5,12 +5,15 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/ShootingGame.unity
-    guid: 4a75e7d0d669244c8a1eeb4175154519
   - enabled: 1
     path: Assets/Scenes/EscapeRoom.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/ShootingGame.unity
+    guid: 4a75e7d0d669244c8a1eeb4175154519
+  - enabled: 1
+    path: Assets/Scenes/Mini-game-puzzle-box.unity
+    guid: df315c7dde628b845b677119c7503ef9
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: db6c74311ae4240e88cca4c1715db164, type: 2}
     UnityEditor.XR.ARKit.ARKitSettings: {fileID: 11400000, guid: 2e728f87b02254dcdb6eb0fc45812222, type: 2}

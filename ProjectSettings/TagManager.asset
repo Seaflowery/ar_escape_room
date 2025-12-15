@@ -8,6 +8,8 @@ TagManager:
   - target
   - interactable
   - Battery
+  - PlayerSpawn
+  - PlayerRig
   layers:
   - Default
   - TransparentFX
